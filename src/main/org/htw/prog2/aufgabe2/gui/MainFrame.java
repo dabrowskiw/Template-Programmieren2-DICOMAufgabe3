@@ -60,10 +60,6 @@ public class MainFrame extends JFrame {
         });
     }
 
-    public void addMarkedFrame(DICOMFrame frame) {
-    }
-
-
     public void setDetailSeries(DICOMImage image) {
         seriesSlider.setEnabled(true);
         seriesSlider.setMinimum(0);
@@ -74,14 +70,8 @@ public class MainFrame extends JFrame {
         setDetailFrame(image.getFrame(0), edgeCheckBox.isSelected());
     }
 
-    public void setDetailFrame(DICOMFrame frame) {
-        setDetailFrame(frame, edgeCheckBox.isSelected());
-    }
-
-
     public void setDetailFrame(DICOMFrame frame, boolean showEdges) {
         detailPanel.setDetailFrame(frame, showEdges);
-        imagelist.setSelectedFrame(frame);
         revalidate();
         repaint();
     }
@@ -133,8 +123,5 @@ public class MainFrame extends JFrame {
             }
         });
         controlPanel.add(edgeCheckBox);
-    }
-
-    public void removeMarkedFrame(DICOMFrame frame) {
     }
 }

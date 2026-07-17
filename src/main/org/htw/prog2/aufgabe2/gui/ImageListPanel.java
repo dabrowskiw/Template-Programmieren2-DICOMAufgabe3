@@ -1,25 +1,19 @@
 package org.htw.prog2.aufgabe2.gui;
 
-import org.htw.prog2.aufgabe2.DICOMFrame;
 import org.htw.prog2.aufgabe2.DICOMImage;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
 import java.util.LinkedList;
 
 public class ImageListPanel extends JPanel {
     private DICOMImage image;
     private JPanel thumbnailPanel;
-    private LinkedList<FrameThumbnail> markedFrames;
+    private LinkedList<Integer> markedFrames;
     private MainFrame mainFrame;
-    private FrameThumbnail selectedThumbnail = null;
 
     public ImageListPanel(int width, MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -33,18 +27,33 @@ public class ImageListPanel extends JPanel {
         setPreferredSize(new Dimension(width, 400));
     }
 
-    public void setSelectedFrame(DICOMFrame frame) {
-    }
-
     public void setImage(DICOMImage newImage) {
-    }
+        image = newImage;
+        markedFrames = new LinkedList<>();
+        SeriesThumbnail seriesThumbnail = new SeriesThumbnail(image, getWidth(), 5);
+        seriesThumbnail.setAlignmentX(0);
+        seriesThumbnail.setAlignmentY(0);
+        seriesThumbnail.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                seriesThumbnail.setSelected(true);
+                mainFrame.setDetailSeries(image);
+//                repaint();
+            }
 
-    private void updateSize() {
-    }
+            @Override
+            public void mousePressed(MouseEvent mouseEvent) { }
 
-    public void addMarkedFrame(DICOMFrame frame) {
-    }
+            @Override
+            public void mouseReleased(MouseEvent mouseEvent) { }
 
-    public void removeMarkedFrame(DICOMFrame frame) {
+            @Override
+            public void mouseEntered(MouseEvent mouseEvent) { }
+
+            @Override
+            public void mouseExited(MouseEvent mouseEvent) { }
+        });
+        add(seriesThumbnail, BorderLayout.LINE_START);
+        add(Box.createVerticalStrut(5));
     }
 }
