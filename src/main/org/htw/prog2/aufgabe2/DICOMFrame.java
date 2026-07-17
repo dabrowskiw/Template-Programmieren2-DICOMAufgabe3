@@ -2,13 +2,11 @@ package org.htw.prog2.aufgabe2;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 
 public class DICOMFrame {
     private static final double[][] S_x = new double[][]{new double[]{-1,0,1}, new double[]{-2,0,2}, new double[]{-1,0,1}};
     private static final double[][] S_y = new double[][]{new double[]{-1,-2,-1}, new double[]{0,0,0}, new double[]{1,2,1}};
     private double brightness = 1;
-    private LinkedList<DICOMFrameMark> marks = new LinkedList<>();
 
     private BufferedImage image;
     private BufferedImage edges;
@@ -71,16 +69,5 @@ public class DICOMFrame {
             detectEdges();
         }
         return edges;
-    }
-
-    public void addMark(DICOMFrameMark mark) {
-    }
-
-    public LinkedList<DICOMFrameMark> getMarks() {
-        return marks;
-    }
-
-    public void removeMark(DICOMFrameMark mark) {
-
     }
 }

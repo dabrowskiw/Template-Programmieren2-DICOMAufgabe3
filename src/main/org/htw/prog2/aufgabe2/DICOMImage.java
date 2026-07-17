@@ -1,10 +1,9 @@
 package org.htw.prog2.aufgabe2;
 
-import org.dcm4che3.imageio.plugins.dcm.DicomImageReadParam;
+import com.pixelmed.dicom.AttributeList;
+import com.pixelmed.display.SourceImage;
 
 import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,18 +16,15 @@ public class DICOMImage {
     public DICOMImage(File infile, String name) {
         this.name = name;
         try {
-            ImageIO.scanForPlugins();
-            ImageReader ir = ImageIO.getImageReadersByFormatName("DICOM").next();
-            DicomImageReadParam param = (DicomImageReadParam) ir.getDefaultReadParam();
-            ImageInputStream iis = ImageIO.createImageInputStream(infile);
-            ir.setInput(iis);
-            for(int i=0; ; i++) {
-                BufferedImage image = ir.read(i, param);
+            AttributeList fileattributes = new AttributeList();
+            fileattributes.read(infile);
+            SourceImage dcImage = new SourceImage(fileattributes);
+            for(int i=0; i<dcImage.getNumberOfFrames(); i++) {
+                BufferedImage image = dcImage.getBufferedImage(i);
                 frames.add(new DICOMFrame(image));
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("Error reading image file " + infile.getAbsolutePath() + ": " + e.getMessage());
-        } catch(IndexOutOfBoundsException e) {
         }
     }
 
@@ -55,10 +51,10 @@ public class DICOMImage {
     }
 
     public int getNumFrames() {
-        return frames.size();
+        return 0;
     }
 
     public DICOMFrame getFrame(int num) {
-        return frames.get(num);
+        return null;
     }
 }
